@@ -1,12 +1,12 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-const DetailCategory = () => {
+const MealDetailScreen = () => {
   return (
     <View>
-      <Text>Category</Text>
+      <Text>MealDetailScreen</Text>
     </View>
   );
 };
 
-export default DetailCategory;
+export default MealDetailScreen;

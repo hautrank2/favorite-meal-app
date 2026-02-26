@@ -8,8 +8,9 @@ import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/use-color-scheme";
+import { AllProviders } from "@/providers";
 import CategoriesScreen from "@/screens/CategoriesScreen";
-import DetailCategory from "@/screens/DetailCategory";
+import MealDetailScreen from "@/screens/MealDetailScreen";
 import "../global.css";
 
 const Stack = createNativeStackNavigator();
@@ -19,11 +20,13 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack.Navigator initialRouteName="Categories">
-        <Stack.Screen name="Categories" component={CategoriesScreen} />
-        <Stack.Screen name="DetailCategory" component={DetailCategory} />
-      </Stack.Navigator>
-      <StatusBar style="auto" />
+      <AllProviders>
+        <Stack.Navigator initialRouteName="Categories">
+          <Stack.Screen name="Categories" component={CategoriesScreen} />
+          <Stack.Screen name="MealDetailScreen" component={MealDetailScreen} />
+        </Stack.Navigator>
+        <StatusBar style="auto" />
+      </AllProviders>
     </ThemeProvider>
   );
 }
