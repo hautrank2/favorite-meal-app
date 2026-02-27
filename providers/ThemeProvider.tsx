@@ -1,7 +1,7 @@
 import { lightPalette } from "@/themes/light";
 import { DefaultTheme } from "@react-navigation/native";
 import React, { FC, PropsWithChildren } from "react";
-import { PaperProvider } from "react-native-paper";
+import { MD3LightTheme, PaperProvider } from "react-native-paper";
 
 export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   const theme = {
@@ -16,5 +16,5 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     },
   };
 
-  return <PaperProvider theme={theme}>{children}</PaperProvider>;
+  return <PaperProvider theme={MD3LightTheme}>{children}</PaperProvider>;
 };

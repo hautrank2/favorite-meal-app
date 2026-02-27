@@ -1,9 +1,12 @@
 import { CATEGORIES } from "@/data/dummy-data";
+import { ScreenProps } from "@/types/screen";
 import React from "react";
 import { FlatList, View } from "react-native";
-import { Card, Text } from "react-native-paper";
+import { Card, Text, TouchableRipple } from "react-native-paper";
 
-const CategoriesScreen = () => {
+type CategoriesScreenProps = ScreenProps<"Categories">;
+
+const CategoriesScreen: React.FC<CategoriesScreenProps> = ({ navigation }) => {
   const data = CATEGORIES;
   return (
     <View>
@@ -12,11 +15,18 @@ const CategoriesScreen = () => {
         numColumns={2}
         renderItem={({ item, index }) => {
           return (
-            <Card>
-              <Card.Content>
-                <Text variant="bodyLarge">{item.title}</Text>
-              </Card.Content>
-            </Card>
+            <TouchableRipple
+              className="flex-1 mx-2 my-2"
+              onPress={() => {
+                navigation.navigate("MealOverview", { categoryId: item.id });
+              }}
+            >
+              <Card>
+                <Card.Content>
+                  <Text variant="bodyLarge">{item.title}</Text>
+                </Card.Content>
+              </Card>
+            </TouchableRipple>
           );
         }}
         keyExtractor={(item) => item.id}
