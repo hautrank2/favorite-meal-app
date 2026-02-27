@@ -13,12 +13,27 @@ import { AllProviders } from "@/providers";
 import CategoriesScreen from "@/screens/CategoriesScreen";
 import MealDetailScreen from "@/screens/MealDetailScreen";
 import MealOverviewScreen from "@/screens/MealOverviewScreen";
+import { CategoryModel } from "@/types/category";
+import { MealModel } from "@/types/meal";
+import { LogBox } from "react-native";
 import "../global.css";
+
+// Handle error
+// [runtime not ready] Error: Non-js exception: compiling JS failed: 10839:8 react native
+// Enable logging for all warnings
+LogBox.ignoreAllLogs(false);
+
+// Capture global JS errors
+ErrorUtils.setGlobalHandler((error, isFatal) => {
+  console.error("Caught global error:", error, isFatal);
+});
 
 export type RootStackParamList = {
   Categories: {};
-  MealDetail: {};
-  MealOverview: { categoryId: string };
+  MealDetail: {
+    meal: MealModel;
+  };
+  MealOverview: { category: CategoryModel };
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
@@ -35,7 +50,13 @@ export default function RootLayout() {
         <Stack.Navigator initialRouteName="Categories">
           <Stack.Screen name="Categories" component={CategoriesScreen} />
           <Stack.Screen name="MealDetail" component={MealDetailScreen} />
-          <Stack.Screen name="MealOverview" component={MealOverviewScreen} />
+          <Stack.Screen
+            name="MealOverview"
+            component={MealOverviewScreen}
+            options={({ route }) => ({
+              title: route.params.category.title,
+            })}
+          />
         </Stack.Navigator>
         <StatusBar style="auto" />
       </AllProviders>

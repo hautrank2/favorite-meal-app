@@ -1,4 +1,4 @@
-import { CATEGORIES } from "@/data/dummy-data";
+import { CATEGORIES } from "@/data/categories";
 import { ScreenProps } from "@/types/screen";
 import React from "react";
 import { FlatList, View } from "react-native";
@@ -16,14 +16,14 @@ const CategoriesScreen: React.FC<CategoriesScreenProps> = ({ navigation }) => {
         renderItem={({ item, index }) => {
           return (
             <TouchableRipple
-              className="flex-1 mx-2 my-2"
+              className="flex-1 mx-2 my-2 p-0 h-40"
               onPress={() => {
-                navigation.navigate("MealOverview", { categoryId: item.id });
+                navigation.navigate("MealOverview", { category: item });
               }}
             >
-              <Card>
+              <Card style={{ backgroundColor: item.color }} className="h-full">
                 <Card.Content>
-                  <Text variant="bodyLarge">{item.title}</Text>
+                  <Text variant="headlineMedium">{item.title}</Text>
                 </Card.Content>
               </Card>
             </TouchableRipple>
