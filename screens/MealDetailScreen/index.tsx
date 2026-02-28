@@ -1,12 +1,21 @@
 import { ScreenProps } from "@/types/screen";
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { FlatList, Image, View } from "react-native";
-import { Card, Chip, Text } from "react-native-paper";
+import { Button, Card, Chip, Text } from "react-native-paper";
 
 type MealDetailScreenProps = ScreenProps<"MealDetail">;
 
-const MealDetailScreen = ({ route }: MealDetailScreenProps) => {
+const MealDetailScreen = ({ route, navigation }: MealDetailScreenProps) => {
   const mealData = route.params.meal;
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button onPress={() => alert("This is a button!")}>Info</Button>
+      ),
+    });
+  }, [navigation]);
+
   return (
     <View>
       <Image
