@@ -1,3 +1,5 @@
+import { CategoryModel } from "./category";
+
 export type MealModel = {
   id: string;
   categoryIds: string[];
@@ -16,4 +18,8 @@ export type MealModel = {
   isVegan: boolean;
   isVegetarian: boolean;
   isLactoseFree: boolean;
+};
+
+export type MealDataModel = MealModel & {
+  categories: CategoryModel[];
 };

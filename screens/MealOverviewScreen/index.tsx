@@ -1,16 +1,12 @@
 import { CATEGORIES } from "@/data/categories";
 import { MEALS } from "@/data/meals";
 import { cn } from "@/lib/cn";
-import { CategoryModel } from "@/types/category";
-import { MealModel } from "@/types/meal";
+import { MealDataModel } from "@/types/meal";
 import { ScreenProps } from "@/types/screen";
 import React, { useMemo } from "react";
 import { FlatList, View } from "react-native";
 import { Button, Card, Chip, Text } from "react-native-paper";
 
-type MealDataModel = MealModel & {
-  categories: CategoryModel[];
-};
 type MealOverviewScreenProps = ScreenProps<"MealOverview">;
 
 const MealOverviewScreen: React.FC<MealOverviewScreenProps> = ({
@@ -62,7 +58,9 @@ const MealOverviewScreen: React.FC<MealOverviewScreenProps> = ({
                 <Button
                   mode="contained"
                   onPress={() => {
-                    navigation.navigate("MealDetail", { meal: item });
+                    navigation.navigate("MealDetail", {
+                      meal: item,
+                    });
                   }}
                 >
                   Detail

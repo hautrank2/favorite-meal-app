@@ -14,7 +14,7 @@ import CategoriesScreen from "@/screens/CategoriesScreen";
 import MealDetailScreen from "@/screens/MealDetailScreen";
 import MealOverviewScreen from "@/screens/MealOverviewScreen";
 import { CategoryModel } from "@/types/category";
-import { MealModel } from "@/types/meal";
+import { MealDataModel } from "@/types/meal";
 import { LogBox } from "react-native";
 import "../global.css";
 
@@ -31,7 +31,7 @@ ErrorUtils.setGlobalHandler((error, isFatal) => {
 export type RootStackParamList = {
   Categories: {};
   MealDetail: {
-    meal: MealModel;
+    meal: MealDataModel;
   };
   MealOverview: { category: CategoryModel };
 };
@@ -49,12 +49,18 @@ export default function RootLayout() {
       <AllProviders>
         <Stack.Navigator initialRouteName="Categories">
           <Stack.Screen name="Categories" component={CategoriesScreen} />
-          <Stack.Screen name="MealDetail" component={MealDetailScreen} />
           <Stack.Screen
             name="MealOverview"
             component={MealOverviewScreen}
             options={({ route }) => ({
               title: route.params.category.title,
+            })}
+          />
+          <Stack.Screen
+            name="MealDetail"
+            component={MealDetailScreen}
+            options={({ route }) => ({
+              title: route.params.meal.title,
             })}
           />
         </Stack.Navigator>
