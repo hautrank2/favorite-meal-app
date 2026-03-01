@@ -1,20 +1,33 @@
+import { toggleFavorite, useAppDispatch, useAppSelector } from "@/store/redux";
 import { ScreenProps } from "@/types/screen";
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useMemo } from "react";
 import { FlatList, Image, View } from "react-native";
-import { Button, Card, Chip, Text } from "react-native-paper";
+import { Card, Chip, IconButton, Text } from "react-native-paper";
 
 type MealDetailScreenProps = ScreenProps<"MealDetail">;
 
 const MealDetailScreen = ({ route, navigation }: MealDetailScreenProps) => {
   const mealData = route.params.meal;
 
+  const { mealIds } = useAppSelector((state) => state.favorites);
+  const dispatch = useAppDispatch();
+
+  const isFavorite = useMemo(
+    () => mealIds.includes(mealData.id),
+    [mealIds, mealData],
+  );
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Button onPress={() => alert("This is a button!")}>Info</Button>
+        <IconButton
+          icon="star"
+          selected={isFavorite}
+          onPress={() => dispatch(toggleFavorite(mealData.id))}
+        />
       ),
     });
-  }, [navigation]);
+  }, [dispatch, mealData, isFavorite, navigation]);
 
   return (
     <View>

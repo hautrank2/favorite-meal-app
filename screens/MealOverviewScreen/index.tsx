@@ -1,9 +1,10 @@
 import { CATEGORIES } from "@/data/categories";
 import { MEALS } from "@/data/meals";
 import { cn } from "@/lib/cn";
+import { CategoryModel } from "@/types/category";
 import { MealDataModel } from "@/types/meal";
 import { ScreenProps } from "@/types/screen";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { FlatList, View } from "react-native";
 import { Button, Card, Chip, Text } from "react-native-paper";
 
@@ -14,11 +15,14 @@ const MealOverviewScreen: React.FC<MealOverviewScreenProps> = ({
   navigation,
 }) => {
   const categoryData = route.params.category;
+  const [activeCategory, setActiveCategory] =
+    useState<CategoryModel>(categoryData);
+
   const data = useMemo(() => {
     const categoryMap = new Map(CATEGORIES.map((c) => [c.id, c]));
 
     return MEALS.reduce((acc, meal) => {
-      if (!meal.categoryIds.includes(categoryData.id)) return acc;
+      if (!meal.categoryIds.includes(activeCategory.id)) return acc;
 
       acc.push({
         ...meal,
@@ -29,10 +33,22 @@ const MealOverviewScreen: React.FC<MealOverviewScreenProps> = ({
 
       return acc;
     }, [] as MealDataModel[]);
-  }, [categoryData]);
+  }, [activeCategory]);
 
   return (
     <View>
+      {/* <DrawerPaper.Section title="Categories">
+        {categories.map((category) => {
+          return (
+            <DrawerPaper.Item
+              key={category.id}
+              label={category.title}
+              active={activeCategory.id === category.id}
+              onPress={() => setActiveCategory(category)}
+            />
+          );
+        })}
+      </DrawerPaper.Section> */}
       <FlatList
         data={data}
         keyExtractor={(item) => item.id}
